@@ -82,24 +82,28 @@
 
     // Click the edit save changes button
     $('#edit_save').click(function () {
-        // Change the item's name
-        edited_item.name = $('#edit_name').val();
-        // Submit the change
-        $.ajax({
-            url: '/api/jobtitles/' + edited_item.jobTitleId,
-            type: 'PUT',
-            contentType: "application/json; charset=utf-8",
-            data: JSON.stringify(edited_item),
-            error: function (j, status) {
-                alert('A server error has occurred');
-            },
-            complete: function (data) {
-                // Hide the modal
-                $('#edit_item_modal').modal('hide');
-                // Reload the table
-                datatable.ajax.reload();
-            }
-        });
+        if ($('#edit_name').val() == '') {
+            alert('Please enter a valid name');
+        } else {
+            // Change the item's name
+            edited_item.name = $('#edit_name').val();
+            // Submit the change
+            $.ajax({
+                url: '/api/jobtitles/' + edited_item.jobTitleId,
+                type: 'PUT',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(edited_item),
+                error: function (j, status) {
+                    alert('A server error has occurred');
+                },
+                complete: function (data) {
+                    // Hide the modal
+                    $('#edit_item_modal').modal('hide');
+                    // Reload the table
+                    datatable.ajax.reload();
+                }
+            });
+        }
     });
 
     // Click the delete item button
